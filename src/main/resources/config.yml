@@ -1,0 +1,29 @@
+lobby-spawn:
+  world: 'world'
+  x: 0
+  y: 0
+  z: 0
+  pitch: 0
+  yaw: 0
+arena-spawn:
+  world: 'world'
+  x: 0
+  y: 0
+  z: 0
+  pitch: 0
+  yaw: 0
+arenasign:
+  line1: '&6-- ARENA --'
+  line2: '&7-> Click to join <-'
+  line3: '&6-----'
+  line4: ''
+  key: 'arenasign'
+kits:
+  default:
+    inventory:
+      name: '&a&lPvP'
+      icon: 'DIAMOND_SWORD'
+      slot: 0
+    items:
+      - DIAMOND_SWORD
+      - APPLE;10
