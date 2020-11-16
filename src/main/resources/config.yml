@@ -1,3 +1,9 @@
+database:
+  host: 'localhost'
+  port: '3306'
+  DBname: 'kitpvp_database'
+  username: 'root'
+  password: ''
 lobby-spawn:
   world: 'world'
   x: 0
@@ -19,11 +25,16 @@ arenasign:
   line4: ''
   key: 'arenasign'
 kits:
-  default:
+  pvp:
     inventory:
-      name: '&a&lPvP'
-      icon: 'DIAMOND_SWORD'
-      slot: 0
+      gui-display: 'PvP'
+      gui-material: 'DIAMOND_SWORD'
+      name: 'pvp'
     items:
       - DIAMOND_SWORD
       - APPLE;10
+    armor:
+      helmet: 'DIAMOND_HELMET'
+      chestplate: 'GOLD_CHESTPLATE'
+      leggings: 'IRON_LEGGINGS'
+      boots: 'IRON_BOOTS'

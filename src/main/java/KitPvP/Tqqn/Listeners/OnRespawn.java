@@ -10,4 +10,6 @@ public class OnRespawn implements Listener {
     public void onPlayerDeath(org.bukkit.event.player.PlayerRespawnEvent event) {
         event.setRespawnLocation(Config.getLobbySpawn());
     }
+
+
 }

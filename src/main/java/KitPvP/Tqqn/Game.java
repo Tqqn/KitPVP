@@ -1,8 +1,8 @@
 package KitPvP.Tqqn;
 
-import KitPvP.Tqqn.Listeners.ArenaSign;
-import KitPvP.Tqqn.Listeners.OnRespawn;
-import KitPvP.Tqqn.Listeners.onJoinEvent;
+import KitPvP.Tqqn.DB.DBGetter;
+import KitPvP.Tqqn.DB.DataBase;
+import KitPvP.Tqqn.Listeners.*;
 import KitPvP.Tqqn.Utils.Config;
 import co.aikar.commands.BukkitMessageFormatter;
 import co.aikar.commands.MessageType;
@@ -12,35 +12,43 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
+import java.sql.SQLException;
 
 public final class Game extends JavaPlugin {
 
-    private static Game instance;
     public Config config = new Config(this);
     private static PaperCommandManager manager;
-    public static HashMap kits;
+
+    public DataBase database;
+    public DBGetter data;
 
     @Override
     public void onEnable() {
-        System.out.println("KitPVP Plugin has been enabled! 1.0");
+        this.database = new DataBase();
+        this.data = new DBGetter(this);
 
-        new Config(this);
+        try {
+            database.connect();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Database not connected (login info incorrect or this server is not using a database).");
+        }
+
+        if (database.isConnected()) {
+            System.out.println("Database is connected!");
+            data.createTable();
+        }
+
+        System.out.println("KitPVP Plugin has been enabled! 1.0");
 
         registerCommands();
         registerEvents();
-
-        kits = Config.getKits();
-
 
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        database.disconnect();
     }
-
-    public static Game getInstance() { return instance; }
 
     public void registerCommands() {
         manager = new PaperCommandManager(this);
@@ -62,7 +70,9 @@ public final class Game extends JavaPlugin {
     public void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new OnRespawn(),(this));
-        pm.registerEvents(new onJoinEvent(),(this));
+        pm.registerEvents(new onJoinEvent(this),(this));
         pm.registerEvents(new ArenaSign(),(this));
+        pm.registerEvents(new GUIEvent(),(this));
+        pm.registerEvents(new onDeath(this),(this));
     }
 }

@@ -1,5 +1,6 @@
 package KitPvP.Tqqn.Listeners;
 
+import KitPvP.Tqqn.KitsGUI;
 import KitPvP.Tqqn.Utils.Color;
 import KitPvP.Tqqn.Utils.Config;
 import org.bukkit.Material;
@@ -18,12 +19,14 @@ public class ArenaSign implements Listener {
 
     @EventHandler
     public void onSignClick(PlayerInteractEvent event) {
-        if (event.hasBlock() && event.getClickedBlock().getType().equals(Material.SIGN)) {
-            Sign sign = (Sign) event.getClickedBlock().getState();
-            Player player = event.getPlayer();
-            if (sign.getLine(0).equals(sign0)) {
-               player.teleport(Config.getArenaSpawn());
-               player.sendMessage(Color.translate("&3You joined the arena!"));
+        if (event.getClickedBlock() != null) {
+            if (event.hasBlock() && event.getClickedBlock().getType().equals(Material.SIGN) || event.getClickedBlock().getType().equals(Material.WALL_SIGN)) {
+                Sign sign = (Sign) event.getClickedBlock().getState();
+                Player player = event.getPlayer();
+                if (sign.getLine(0).equals(sign0)) {
+                    KitsGUI gui = new KitsGUI();
+                    player.openInventory(gui.getInv());
+                }
             }
         }
     }

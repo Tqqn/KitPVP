@@ -43,7 +43,6 @@ public class KitsGUI {
 */
 
   public KitsGUI() {
-
          inv = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Kit Selection");
           HashMap kits = Config.getKits();
       for (Object o : kits.values()) {

@@ -6,8 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class Config {
 
@@ -16,18 +20,29 @@ public class Config {
     public Config(Game game) {
         Config.game = game;
 
-        game.getConfig().options().copyDefaults();
-        game.saveDefaultConfig();
+
     }
 
     public static HashMap getKits() {
         HashMap<String, Kits> foundKits = new HashMap<>();
-        for (String kit : game.getConfig().getConfigurationSection("kits.").getKeys(true)) {
-            Kits foundKit = new Kits(getKitName(kit), getKitDisplay(kit), getKitGuiMaterial(kit));
+        for (String kit : game.getConfig().getConfigurationSection("kits.").getKeys(false)) {
+            Kits foundKit = new Kits(getKitName(kit), getKitDisplay(kit), Material.getMaterial(getKitGuiMaterial(kit)));
             String name = foundKit.getName();
             foundKits.put(name, foundKit);
         }
         return foundKits;
+    }
+
+    public static Inventory getKitItems(String path, Inventory inv) {
+        for (String items : game.getConfig().getStringList("kits." + path + ".items")) {
+            String[] split = items.split(";");
+            Material material = Material.getMaterial(split[0]);
+            int amount = Integer.parseInt(split[1]);
+
+            ItemStack kit = new ItemStack(material,amount);
+            inv.addItem(kit);
+        }
+        return inv;
     }
 
     public static void saveKit(Kits kit) {
@@ -97,18 +112,69 @@ public class Config {
         return game.getConfig().getString("arenasign.key");
     }
 
-    //  public static ConfigurationSection getSection(String path) {
-    //      return game.getConfig().getcon
-    //  }
+     public static Set<String> getSection() {
+        return game.getConfig().getConfigurationSection("kits").getKeys(false);
+     }
     public static String getKitDisplay(String kit) {
-        return game.getConfig().getString(Color.translate("kits." + kit + "inventory.gui-display"));
+        return game.getConfig().getString(Color.translate("kits." + kit + ".inventory.gui-display"));
     }
 
-    public static Material getKitGuiMaterial(String kit) {
-        return Material.getMaterial(game.getConfig().getString("kits." + kit + "inventory.gui-material"));
+    public static String getKitGuiMaterial(String kit) {
+        return game.getConfig().getString("kits." + kit + ".inventory.gui-material");
     }
 
     public static String getKitName(String kit) {
-        return game.getConfig().getString("kits." + kit + "inventory.name");
+        return game.getConfig().getString("kits." + kit + ".inventory.name");
     }
+    public static List<String> getStringList(String path) {
+        return game.getConfig().getStringList("kits." + path + ".items");
+    }
+    public static String getStringArmor(String path,String armor) {
+        return game.getConfig().getString("kits." + path + armor);
+    }
+    public static String getString(String path) {
+        return game.getConfig().getString(path);
+    }
+
+    public static void giveKit(Player player,String key) {
+        for (String items : game.getConfig().getStringList("kits." + key + ".items")) {
+            String[] split = items.split(";");
+            Material mat = Material.getMaterial(split[0]);
+            int amount = Integer.parseInt(split[1]);
+
+            ItemStack kit = new ItemStack(mat,amount);
+
+            player.getInventory().addItem(kit);
+            player.closeInventory();
+        }
+    }
+    public static void giveKitArmor(Player player, String key) {
+        String helmet = game.getConfig().getString("kits." + key + ".armor.helmet").toUpperCase();
+        String chestplate = game.getConfig().getString("kits." + key + ".armor.chestplate").toUpperCase();
+        String leggings = game.getConfig().getString("kits." + key + ".armor.leggings").toUpperCase();
+        String boots = game.getConfig().getString("kits." + key + ".armor.boots").toUpperCase();
+
+        player.getInventory().setHelmet(new ItemStack(helmet != null ? Material.matchMaterial(helmet) : Material.AIR));
+        player.getInventory().setChestplate(new ItemStack(chestplate != null ? Material.matchMaterial(chestplate) : Material.AIR));
+        player.getInventory().setLeggings(new ItemStack(leggings != null ? Material.matchMaterial(leggings) : Material.AIR));
+        player.getInventory().setBoots(new ItemStack(boots != null ? Material.matchMaterial(boots) : Material.AIR));
+        player.updateInventory();
+    }
+    public static String getHost() {
+        return game.getConfig().getString("database.host");
+    }
+    public static String getPort() {
+        return game.getConfig().getString("database.port");
+    }
+    public static String getDBname() {
+        return game.getConfig().getString("database.DBname");
+    }
+    public static String getUsername() {
+        return game.getConfig().getString("database.username");
+    }
+    public static String getPassword() {
+        return game.getConfig().getString("database.password");
+    }
+
+
 }
