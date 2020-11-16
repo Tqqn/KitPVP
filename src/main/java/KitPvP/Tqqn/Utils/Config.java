@@ -1,17 +1,14 @@
 package KitPvP.Tqqn.Utils;
 
 import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.Kits;
+import KitPvP.Tqqn.Kits.Kits;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 public class Config {
 
@@ -20,8 +17,11 @@ public class Config {
     public Config(Game game) {
         Config.game = game;
 
-
+        game.getConfig().options().copyDefaults();
+        game.saveDefaultConfig();
     }
+
+    //Gets the kit names from the config and than creates them with the get methods
 
     public static HashMap getKits() {
         HashMap<String, Kits> foundKits = new HashMap<>();
@@ -33,24 +33,7 @@ public class Config {
         return foundKits;
     }
 
-    public static Inventory getKitItems(String path, Inventory inv) {
-        for (String items : game.getConfig().getStringList("kits." + path + ".items")) {
-            String[] split = items.split(";");
-            Material material = Material.getMaterial(split[0]);
-            int amount = Integer.parseInt(split[1]);
-
-            ItemStack kit = new ItemStack(material,amount);
-            inv.addItem(kit);
-        }
-        return inv;
-    }
-
-    public static void saveKit(Kits kit) {
-        game.getConfig().set("kits." + kit + ".name", kit.getName());
-        game.getConfig().set("kits." + kit + ".gui-display", kit.getDisplay());
-        game.getConfig().set("kits." + kit + ".gui-material", kit.getMaterial());
-    }
-
+    //gets the spawnpoint of the lobby from the config.
 
     public static Location getLobbySpawn() {
         return new Location(
@@ -62,6 +45,8 @@ public class Config {
                 game.getConfig().getInt("lobby-spawn.pitch"));
     }
 
+    //gets the spawnpoint of the arena from the config.
+
     public static Location getArenaSpawn() {
         return new Location(
                 Bukkit.getWorld(game.getConfig().getString("arena-spawn.world")),
@@ -71,6 +56,8 @@ public class Config {
                 game.getConfig().getInt("arena-spawn.yaw"),
                 game.getConfig().getInt("arena-spawn.pitch"));
     }
+
+    //sets the spawnpoint of the lobby in the config.
 
     public static void setLobbySpawn(Player player) {
         game.getConfig().set("lobby-spawn.world", player.getWorld().getName());
@@ -82,6 +69,8 @@ public class Config {
         game.saveConfig();
     }
 
+    //sets the spawnpoint of the arena in the config.
+
     public static void setArenaSpawn(Player player) {
         game.getConfig().set("arena-spawn.world", player.getWorld().getName());
         game.getConfig().set("arena-spawn.x", player.getLocation().getX());
@@ -92,50 +81,41 @@ public class Config {
         game.saveConfig();
     }
 
+    //gets the sign lines from the custom arena sign
+
     public static String getSignLine0() {
         return game.getConfig().getString("arenasign.line1");
     }
-
     public static String getSignLine1() {
         return game.getConfig().getString("arenasign.line2");
     }
-
     public static String getSignLine2() {
         return game.getConfig().getString("arenasign.line3");
     }
-
     public static String getSignLine3() {
         return game.getConfig().getString("arenasign.line4");
     }
 
+    //gets the signkey from the config
     public static String getSignKey() {
         return game.getConfig().getString("arenasign.key");
     }
 
-     public static Set<String> getSection() {
-        return game.getConfig().getConfigurationSection("kits").getKeys(false);
-     }
+    //gets the gui-display from config
     public static String getKitDisplay(String kit) {
         return game.getConfig().getString(Color.translate("kits." + kit + ".inventory.gui-display"));
     }
-
+    //gets the gui-material from the config
     public static String getKitGuiMaterial(String kit) {
         return game.getConfig().getString("kits." + kit + ".inventory.gui-material");
     }
 
+    //gets the gui-name from the config
     public static String getKitName(String kit) {
         return game.getConfig().getString("kits." + kit + ".inventory.name");
     }
-    public static List<String> getStringList(String path) {
-        return game.getConfig().getStringList("kits." + path + ".items");
-    }
-    public static String getStringArmor(String path,String armor) {
-        return game.getConfig().getString("kits." + path + armor);
-    }
-    public static String getString(String path) {
-        return game.getConfig().getString(path);
-    }
 
+    //gives the kit stated as in the config to the player
     public static void giveKit(Player player,String key) {
         for (String items : game.getConfig().getStringList("kits." + key + ".items")) {
             String[] split = items.split(";");
@@ -148,6 +128,9 @@ public class Config {
             player.closeInventory();
         }
     }
+
+    //gives the kit armor stated as in the config to the player
+
     public static void giveKitArmor(Player player, String key) {
         String helmet = game.getConfig().getString("kits." + key + ".armor.helmet").toUpperCase();
         String chestplate = game.getConfig().getString("kits." + key + ".armor.chestplate").toUpperCase();
@@ -160,6 +143,8 @@ public class Config {
         player.getInventory().setBoots(new ItemStack(boots != null ? Material.matchMaterial(boots) : Material.AIR));
         player.updateInventory();
     }
+
+    //gets the logging info's for the DataBase
     public static String getHost() {
         return game.getConfig().getString("database.host");
     }

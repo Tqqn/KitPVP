@@ -1,40 +1,53 @@
+
+#DataBase login details. Check if spelled correctly.
 database:
-  host: 'localhost'
-  port: '3306'
-  DBname: 'kitpvp_database'
-  username: 'root'
+  host: ''
+  port: ''
+  DBname: ''
+  username: ''
   password: ''
+
+#Lobby-Spawn Location.
 lobby-spawn:
   world: 'world'
   x: 0
-  y: 0
+  y: 100
   z: 0
   pitch: 0
   yaw: 0
+
+#Arena-Spawn Location.
 arena-spawn:
   world: 'world'
   x: 0
-  y: 0
+  y: 100
   z: 0
   pitch: 0
   yaw: 0
+
+#How the custom join sign needs to look.
 arenasign:
   line1: '&6-- ARENA --'
   line2: '&7-> Click to join <-'
   line3: '&6-----'
   line4: ''
+
+#Key for the custom ArenaSIGN
   key: 'arenasign'
+
+#Customazible kits
 kits:
-  pvp:
+  default:
     inventory:
-      gui-display: 'PvP'
+      gui-display: 'Default'
       gui-material: 'DIAMOND_SWORD'
-      name: 'pvp'
+      name: 'default'
+#put after each item an ';' and the int for the amount
     items:
-      - DIAMOND_SWORD
+      - DIAMOND_SWORD;1
       - APPLE;10
     armor:
       helmet: 'DIAMOND_HELMET'
-      chestplate: 'GOLD_CHESTPLATE'
+      chestplate: 'GOLDEN_CHESTPLATE'
       leggings: 'IRON_LEGGINGS'
       boots: 'IRON_BOOTS'

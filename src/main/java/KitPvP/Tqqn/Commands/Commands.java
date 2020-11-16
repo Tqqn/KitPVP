@@ -1,5 +1,7 @@
-package KitPvP.Tqqn;
+package KitPvP.Tqqn.Commands;
 
+import KitPvP.Tqqn.Game;
+import KitPvP.Tqqn.Kits.KitsGUI;
 import KitPvP.Tqqn.Utils.Color;
 import KitPvP.Tqqn.Utils.Config;
 import co.aikar.commands.BaseCommand;
@@ -8,6 +10,8 @@ import co.aikar.commands.annotation.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
+//Standard Plugin command
 @CommandAlias("kp")
 @Description("This command allows to use the kitpvp plugin.")
 
@@ -19,12 +23,14 @@ public class Commands extends BaseCommand {
         this.game = game;
     }
 
+    //kp help -> shows the existing commands
     @HelpCommand
     @Private
     public void help(CommandSender sender, CommandHelp help) {
         help.showHelp();
     }
-
+    //kp setspawn -> sets the spawn of the location of the command sender
+    //permission -> kitpvp.setspawn
     @CommandPermission("kitpvp.setspawn")
     @Subcommand("setspawn")
     @Description("Set the lobbyspawn.")
@@ -33,7 +39,8 @@ public class Commands extends BaseCommand {
             Config.setLobbySpawn(player);
             sender.sendMessage(Color.translate("&aYou set the lobbyspawn to &3" + player.getLocation().getX() + " " + player.getLocation().getZ() + " " + player.getLocation().getY() + " &a!"));
         }
-
+    //kp setarenaspawn -> sets the arenaspawn of the location of the command sender
+    //permission -> kitpvp.setarenaspawn
     @CommandPermission("kitpvp.setarenaspawn")
     @Subcommand("setarenaspawn")
     @Description("Set the arena spawn.")
@@ -42,6 +49,7 @@ public class Commands extends BaseCommand {
         Config.setArenaSpawn(player);
         sender.sendMessage(Color.translate("&aYou set the arenaspawn to &3" + player.getLocation().getX() + " " + player.getLocation().getZ() + " " + player.getLocation().getY() + " &a!"));
     }
+    //kp kit -> opens the KIT GUI to choose a kit //For the players who don't want to walk to the sign xD
     @CommandPermission("kitpvp.kit")
     @Subcommand("kit")
     @Description("Gives a kit.")

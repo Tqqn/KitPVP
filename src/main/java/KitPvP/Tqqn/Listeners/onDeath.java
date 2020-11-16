@@ -17,23 +17,39 @@ public class onDeath implements Listener {
         onDeath.game = game;
     }
 
+
+
     @EventHandler
     public void onPlayerDeathByPlayer(PlayerDeathEvent event) {
         Player player = event.getEntity();
         if (player.getKiller() instanceof Player) {
             Player killer = player.getKiller();
+
+            //add a kill to the DB for the killer
             game.data.addKills(killer.getUniqueId(), 1);
+            //add a death to the DB for the killer
             game.data.addDeaths(player.getUniqueId(),1);
+
+
+            //sets a custom deathmessage
             event.setDeathMessage(Color.translate(ChatColor.RED + player.getDisplayName() + " &2has been killed by " + ChatColor.RED + killer.getDisplayName()));
+
+            //updates the scoreboard for both players.
             onJoinEvent.updateScoreboardDeaths(player);
+            onJoinEvent.updateScoreboardRatio(player);
+
             onJoinEvent.updateScoreboardKills(killer);
+            onJoinEvent.updateScoreboardRatio(killer);
         } else {
+            //Removes vanilla deathmessages from the server.
             event.setDeathMessage(null);
         }
 
     }
     @EventHandler
     public void onPlayerDeath(EntityDeathEvent event) {
+
+        //if player dies the stuff he drops will despawn/get removed.
         event.getDrops().clear();
     }
 

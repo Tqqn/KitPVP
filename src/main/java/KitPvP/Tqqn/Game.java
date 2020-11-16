@@ -1,5 +1,6 @@
 package KitPvP.Tqqn;
 
+import KitPvP.Tqqn.Commands.Commands;
 import KitPvP.Tqqn.DB.DBGetter;
 import KitPvP.Tqqn.DB.DataBase;
 import KitPvP.Tqqn.Listeners.*;
@@ -16,8 +17,9 @@ import java.sql.SQLException;
 
 public final class Game extends JavaPlugin {
 
-    public Config config = new Config(this);
     private static PaperCommandManager manager;
+
+    public Config config = new Config(this);
 
     public DataBase database;
     public DBGetter data;
@@ -27,12 +29,16 @@ public final class Game extends JavaPlugin {
         this.database = new DataBase();
         this.data = new DBGetter(this);
 
+        new Config(this);
+
+        //try to connect the DataBase
         try {
             database.connect();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Database not connected (login info incorrect or this server is not using a database).");
         }
 
+        //if the DataBase is connected throws println to console
         if (database.isConnected()) {
             System.out.println("Database is connected!");
             data.createTable();
@@ -40,16 +46,21 @@ public final class Game extends JavaPlugin {
 
         System.out.println("KitPVP Plugin has been enabled! 1.0");
 
+        //Register Commands
         registerCommands();
+
+        //Register Events
         registerEvents();
 
     }
 
     @Override
     public void onDisable() {
+        //Disconnect the DataBase if server/plugin is disabling.
         database.disconnect();
     }
 
+    //Registering the Commands + Formats for errors,syntax,info and help
     public void registerCommands() {
         manager = new PaperCommandManager(this);
         manager.enableUnstableAPI("help");
@@ -67,12 +78,13 @@ public final class Game extends JavaPlugin {
         });
     }
 
+    //Registering the Events
     public void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.registerEvents(new OnRespawn(),(this));
+        pm.registerEvents(new onRespawn(),(this));
         pm.registerEvents(new onJoinEvent(this),(this));
-        pm.registerEvents(new ArenaSign(),(this));
-        pm.registerEvents(new GUIEvent(),(this));
+        pm.registerEvents(new signListener(),(this));
+        pm.registerEvents(new GUIListener(),(this));
         pm.registerEvents(new onDeath(this),(this));
     }
 }

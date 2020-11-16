@@ -1,6 +1,6 @@
 package KitPvP.Tqqn.Listeners;
 
-import KitPvP.Tqqn.KitsGUI;
+import KitPvP.Tqqn.Kits.KitsGUI;
 import KitPvP.Tqqn.Utils.Color;
 import KitPvP.Tqqn.Utils.Config;
 import org.bukkit.Material;
@@ -11,12 +11,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ArenaSign implements Listener {
+public class signListener implements Listener {
+
+    //Getting all the signlines from the config for the Arenasign
+
     public String sign0 = Color.translate(Config.getSignLine0());
     public String sign1 = Color.translate(Config.getSignLine1());
     public String sign2 = Color.translate(Config.getSignLine2());
     public String sign3 = Color.translate(Config.getSignLine3());
 
+
+
+    //if a player clicks a sign that equals the first line of the arenasign, open the KITGUI to choose a kit.
     @EventHandler
     public void onSignClick(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
@@ -31,6 +37,8 @@ public class ArenaSign implements Listener {
         }
     }
 
+    //if player with the permission kitpvp.signplace places a sign with the signkey on the first line,
+    // it changes to the custom Arenasign stated as in the Config.
     @EventHandler
     public void arenaSignPlace(SignChangeEvent event) {
         Player player = event.getPlayer();
