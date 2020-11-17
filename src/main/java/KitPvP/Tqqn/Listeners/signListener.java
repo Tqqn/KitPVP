@@ -1,5 +1,6 @@
 package KitPvP.Tqqn.Listeners;
 
+import KitPvP.Tqqn.Game;
 import KitPvP.Tqqn.Kits.KitsGUI;
 import KitPvP.Tqqn.Utils.Color;
 import KitPvP.Tqqn.Utils.Config;
@@ -12,6 +13,12 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class signListener implements Listener {
+
+    private static Game game;
+
+    public signListener(Game game) {
+        signListener.game = game;
+    }
 
     //Getting all the signlines from the config for the Arenasign
 
@@ -30,8 +37,14 @@ public class signListener implements Listener {
                 Sign sign = (Sign) event.getClickedBlock().getState();
                 Player player = event.getPlayer();
                 if (sign.getLine(0).equals(sign0)) {
-                    KitsGUI gui = new KitsGUI();
-                    player.openInventory(gui.getInv());
+
+                    //if the player IS NOT in the arena list -> open GUI, else dont open and send msg
+                    if (!game.isArena(player)) {
+                        KitsGUI gui = new KitsGUI();
+                        player.openInventory(gui.getInv());
+                    } else {
+                        player.sendMessage(Color.translate("&cYou are in the arena."));
+                    }
                 }
             }
         }

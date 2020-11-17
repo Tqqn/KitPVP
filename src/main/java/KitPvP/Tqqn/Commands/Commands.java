@@ -55,7 +55,15 @@ public class Commands extends BaseCommand {
     @Description("Gives a kit.")
     public void kit(CommandSender sender) {
         Player player = (Player) sender;
-        KitsGUI gui = new KitsGUI();
-        player.openInventory(gui.getInv());
+
+        //Checks if player is in the arena.
+        if (game.isArena(player)) {
+            player.sendMessage(Color.translate("&cYou are in the arena."));
+
+            //if not opens kit selector
+        } else {
+            KitsGUI gui = new KitsGUI();
+            player.openInventory(gui.getInv());
+        }
     }
 }

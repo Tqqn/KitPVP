@@ -10,16 +10,21 @@ import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public final class Game extends JavaPlugin {
 
     private static PaperCommandManager manager;
 
     public Config config = new Config(this);
+
+    public ArrayList<UUID> inarena = new ArrayList<>();
 
     public DataBase database;
     public DBGetter data;
@@ -58,6 +63,13 @@ public final class Game extends JavaPlugin {
     public void onDisable() {
         //Disconnect the DataBase if server/plugin is disabling.
         database.disconnect();
+
+        //clears the data from the inarena arraylist
+        inarena.clear();
+        //teleports all players to lobbyspawn on disable/reload
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.teleport(Config.getLobbySpawn());
+        }
     }
 
     //Registering the Commands + Formats for errors,syntax,info and help
@@ -81,10 +93,25 @@ public final class Game extends JavaPlugin {
     //Registering the Events
     public void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.registerEvents(new onRespawn(),(this));
-        pm.registerEvents(new onJoinEvent(this),(this));
-        pm.registerEvents(new signListener(),(this));
-        pm.registerEvents(new GUIListener(),(this));
-        pm.registerEvents(new onDeath(this),(this));
+        pm.registerEvents(new onRespawn(), (this));
+        pm.registerEvents(new onJoinEvent(this), (this));
+        pm.registerEvents(new signListener(this), (this));
+        pm.registerEvents(new GUIListener(this), (this));
+        pm.registerEvents(new onDeath(this), (this));
+        pm.registerEvents(new onLeave(this), (this));
+    }
+
+    //checks if the player is in the arena-list
+    public boolean isArena(Player player) {
+        if (inarena.contains(player.getUniqueId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //adds the player to the arena-list
+    public void addArena(Player player) {
+        inarena.add(player.getUniqueId());
     }
 }

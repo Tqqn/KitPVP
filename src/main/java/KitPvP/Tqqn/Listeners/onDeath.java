@@ -28,7 +28,11 @@ public class onDeath implements Listener {
             //add a kill to the DB for the killer
             game.data.addKills(killer.getUniqueId(), 1);
             //add a death to the DB for the killer
-            game.data.addDeaths(player.getUniqueId(),1);
+            game.data.addDeaths(player.getUniqueId(), 1);
+
+            if (game.inarena.contains(player.getUniqueId())) {
+                game.inarena.remove(player.getUniqueId());
+            }
 
 
             //sets a custom deathmessage
@@ -48,9 +52,17 @@ public class onDeath implements Listener {
     }
     @EventHandler
     public void onPlayerDeath(EntityDeathEvent event) {
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
 
-        //if player dies the stuff he drops will despawn/get removed.
-        event.getDrops().clear();
+            //if the player that died is in the arena, remove him from arenalist
+            if (game.inarena.contains(player.getUniqueId())) {
+                game.inarena.remove(player.getUniqueId());
+            }
+
+            //if player dies the stuff he drops will despawn/get removed.
+            event.getDrops().clear();
+        }
     }
 
 }
