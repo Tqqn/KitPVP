@@ -12,8 +12,8 @@ public class onLeave implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (Game.getInstance().inarena.contains(player.getUniqueId())) {
-            Game.getInstance().inarena.remove(player.getUniqueId());
+        if (Game.getInstance().playerInArena.contains(player.getUniqueId())) {
+            Game.getInstance().playerInArena.remove(player.getUniqueId());
         }
     }
 }

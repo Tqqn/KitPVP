@@ -88,21 +88,6 @@ public class Config {
         return game.getConfig().getStringList("arenasign.lines");
     }
 
-    public static String getSignLine0() {
-        return game.getConfig().getString("arenasign.line1");
-    }
-
-    public static String getSignLine1() {
-        return game.getConfig().getString("arenasign.line2");
-    }
-
-    public static String getSignLine2() {
-        return game.getConfig().getString("arenasign.line3");
-    }
-    public static String getSignLine3() {
-        return game.getConfig().getString("arenasign.line4");
-    }
-
     //gets the signkey from the config
     public static String getSignKey() {
         return game.getConfig().getString("arenasign.key");

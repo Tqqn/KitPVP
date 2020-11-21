@@ -25,7 +25,7 @@ public final class Game extends JavaPlugin {
 
     public Config config = new Config(this);
 
-    public Set<UUID> inarena = new HashSet<>();
+    public Set<UUID> playerInArena = new HashSet<>();
 
     private DataBase database;
     private DBGetter data;
@@ -55,7 +55,7 @@ public final class Game extends JavaPlugin {
             data.createTable();
         }
 
-        System.out.println("KitPVP Plugin has been enabled! 1.0");
+        System.out.println("KitPVP Plugin has been enabled!");
 
         //Register Commands
         registerCommands();
@@ -71,7 +71,7 @@ public final class Game extends JavaPlugin {
         database.disconnect();
 
         //clears the data from the inarena arraylist
-        inarena.clear();
+        playerInArena.clear();
         //teleports all players to lobbyspawn on disable/reload
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.teleport(Config.getLobbySpawn());
@@ -109,7 +109,7 @@ public final class Game extends JavaPlugin {
 
     //checks if the player is in the arena-list
     public boolean playerIsArena(Player player) {
-        if (inarena.contains(player.getUniqueId())) {
+        if (playerInArena.contains(player.getUniqueId())) {
             return true;
         } else {
             return false;
@@ -118,17 +118,21 @@ public final class Game extends JavaPlugin {
 
     //adds the player to the arena-list
     public void addPlayerToArena(Player player) {
-        inarena.add(player.getUniqueId());
+        playerInArena.add(player.getUniqueId());
     }
 
+
+    //instance for the DataBase
     public DataBase getDataBase() {
         return database;
     }
 
+    //instance for the DBGetter
     public DBGetter getData() {
         return data;
     }
 
+    //instance for the main class (Game)
     public static Game getInstance() {
         return instance;
     }

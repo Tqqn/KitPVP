@@ -11,6 +11,8 @@ public class ScoreboardManager {
     public ScoreboardManager() {
     }
 
+    //Sets the scoreboard sync, getting the data async
+
     public static void setScoreboard(int kill, int death, Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 
@@ -56,6 +58,8 @@ public class ScoreboardManager {
         player.setScoreboard(obj.getScoreboard());
     }
 
+    // Updating scoreboard sync, getting the data async
+
     public static void updateScoreboard(int killamount, int deathamount, Player player) {
         Team kills = player.getScoreboard().getTeam("kills");
         Team kill = kills != null ? kills : player.getScoreboard().registerNewTeam("kills");
@@ -71,6 +75,7 @@ public class ScoreboardManager {
 
     }
 
+    // Maths the k/d-ratio sum
     public static String getRatioSum(int kill, int death) {
         if (kill == 0 || death == 0) {
             return "0.0";

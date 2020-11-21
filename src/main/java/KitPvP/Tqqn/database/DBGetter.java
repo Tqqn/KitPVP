@@ -54,7 +54,6 @@ public class DBGetter {
         try {
             PreparedStatement preparedStatement = Game.getInstance().getDataBase().getConnection().prepareStatement("SELECT * FROM player_info WHERE UUID=?");
             preparedStatement.setString(1, uuid.toString());
-
             ResultSet results = preparedStatement.executeQuery();
             if (results.next()) {
                 // player is found
@@ -67,11 +66,10 @@ public class DBGetter {
         return false;
     }
 
-    //Adding kills to the DataBase to the desired Player
+    //Adding 1 kill to the DataBase to the desired Player
     public void addKill(UUID uuid) {
         try {
             PreparedStatement preparedStatement = Game.getInstance().getDataBase().getConnection().prepareStatement("UPDATE player_info SET KILLS=KILLS+1 WHERE UUID=?");
-            //  preparedStatement.setInt(1,(getKills(uuid) + kills));
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -80,7 +78,7 @@ public class DBGetter {
         }
     }
 
-    //Adding deaths to the DataBase to the desired Player
+    //Adding 1 death to the DataBase to the desired Player
     public void addDeath(UUID uuid) {
         try {
             PreparedStatement preparedStatement = Game.getInstance().getDataBase().getConnection().prepareStatement("UPDATE player_info SET DEATHS=DEATHS+1 WHERE UUID=?");
@@ -92,6 +90,8 @@ public class DBGetter {
             e.printStackTrace();
         }
     }
+
+    //close method
 
     public static void close(ResultSet resultSet, PreparedStatement preparedStatement) {
         if (resultSet != null) {
@@ -110,6 +110,7 @@ public class DBGetter {
         }
     }
 
+    //getting the playerdata(stats) ASYNC for the updating scoreboard and giving the data to the updatescoreboard method
 
     public void getStatsData(Player player) {
         Bukkit.getScheduler().runTaskAsynchronously(Game.getInstance(), new Runnable() {
@@ -133,6 +134,8 @@ public class DBGetter {
             }
         });
     }
+
+    //getting the playerdata(stats) ASYNC for the join-scoreboard and giving the data to the setscoreboard method after 1 second it's completed
 
     public void getPlayerDataForJoinScoreboard(Player player) {
         Bukkit.getScheduler().runTaskAsynchronously(Game.getInstance(), new Runnable() {

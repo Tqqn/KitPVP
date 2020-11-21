@@ -16,7 +16,7 @@ public class onJoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        //sets the scoreboard for the player that joins.
+        //sets the scoreboard sync for the joining player, getting the data async
 
         DBGetter.getInstance().getPlayerDataForJoinScoreboard(player);
 
