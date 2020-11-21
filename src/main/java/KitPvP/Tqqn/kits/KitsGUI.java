@@ -1,6 +1,6 @@
-package KitPvP.Tqqn.Kits;
+package KitPvP.Tqqn.kits;
 
-import KitPvP.Tqqn.Utils.Config;
+import KitPvP.Tqqn.utils.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
@@ -14,13 +14,12 @@ public class KitsGUI {
     //creates the inventory and adds all the kit gui-display/material to the inventory.
 
   public KitsGUI() {
-         inv = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Kit Selection");
-          HashMap kits = Config.getKits();
-      for (Object o : kits.values()) {
-          Kits kit = (Kits) o;
-          inv.addItem(kit.getItemStack());
+      inv = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Kit Selection");
+      HashMap<String, Kits> kitslist = Config.getKits();
+      for (Kits kits : kitslist.values()) {
+          inv.addItem(kits.getItemStack());
       }
-    }
+  }
 
     //gets the private inventory
     public Inventory getInv() {

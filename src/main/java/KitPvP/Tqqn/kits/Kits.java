@@ -1,6 +1,6 @@
-package KitPvP.Tqqn.Kits;
+package KitPvP.Tqqn.kits;
 
-import KitPvP.Tqqn.Utils.Color;
+import KitPvP.Tqqn.utils.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

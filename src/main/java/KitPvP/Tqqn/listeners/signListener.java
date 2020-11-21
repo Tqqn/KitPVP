@@ -1,9 +1,9 @@
-package KitPvP.Tqqn.Listeners;
+package KitPvP.Tqqn.listeners;
 
 import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.Kits.KitsGUI;
-import KitPvP.Tqqn.Utils.Color;
-import KitPvP.Tqqn.Utils.Config;
+import KitPvP.Tqqn.kits.KitsGUI;
+import KitPvP.Tqqn.utils.Color;
+import KitPvP.Tqqn.utils.Config;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -12,22 +12,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.List;
+
 public class signListener implements Listener {
-
-    private static Game game;
-
-    public signListener(Game game) {
-        signListener.game = game;
-    }
 
     //Getting all the signlines from the config for the Arenasign
 
-    public String sign0 = Color.translate(Config.getSignLine0());
-    public String sign1 = Color.translate(Config.getSignLine1());
-    public String sign2 = Color.translate(Config.getSignLine2());
-    public String sign3 = Color.translate(Config.getSignLine3());
 
+    public List<String> lines = Config.getSignLines();
 
+    public String sign0 = Color.translate(lines.get(0));
+    public String sign1 = Color.translate(lines.get(1));
+    public String sign2 = Color.translate(lines.get(2));
+    public String sign3 = Color.translate(lines.get(3));
 
     //if a player clicks a sign that equals the first line of the arenasign, open the KITGUI to choose a kit.
     @EventHandler
@@ -39,7 +36,7 @@ public class signListener implements Listener {
                 if (sign.getLine(0).equals(sign0)) {
 
                     //if the player IS NOT in the arena list -> open GUI, else dont open and send msg
-                    if (!game.isArena(player)) {
+                    if (!Game.getInstance().playerIsArena((player))) {
                         KitsGUI gui = new KitsGUI();
                         player.openInventory(gui.getInv());
                     } else {
@@ -59,10 +56,10 @@ public class signListener implements Listener {
         String msg = event.getLine(0);
         if (player.hasPermission("kitpvp.signplace")) {
             if (msg != null && msg.equalsIgnoreCase(Config.getSignKey())) {
-                event.setLine(0,sign0);
-                event.setLine(1,sign1);
-                event.setLine(2,sign2);
-                event.setLine(3,sign3);
+                event.setLine(0, sign0);
+                event.setLine(1, sign1);
+                event.setLine(2, sign2);
+                event.setLine(3, sign3);
             }
         }
     }

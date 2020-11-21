@@ -1,7 +1,7 @@
-package KitPvP.Tqqn.Listeners;
+package KitPvP.Tqqn.listeners;
 
 import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.Utils.Config;
+import KitPvP.Tqqn.utils.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,12 +10,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 public class GUIListener implements Listener {
-
-    private static Game game;
-
-    public GUIListener(Game game) {
-        GUIListener.game = game;
-    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -42,8 +36,8 @@ public class GUIListener implements Listener {
                 player.teleport(Config.getArenaSpawn());
 
                 //checks if player is in arena, if not adds player to arena-list
-                if (!game.isArena(player)) {
-                    game.addArena(player);
+                if (!Game.getInstance().playerIsArena((player))) {
+                    Game.getInstance().addPlayerToArena(player);
                 }
             }
         } else {

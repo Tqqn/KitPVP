@@ -1,9 +1,9 @@
-package KitPvP.Tqqn.Commands;
+package KitPvP.Tqqn.commands;
 
 import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.Kits.KitsGUI;
-import KitPvP.Tqqn.Utils.Color;
-import KitPvP.Tqqn.Utils.Config;
+import KitPvP.Tqqn.kits.KitsGUI;
+import KitPvP.Tqqn.utils.Color;
+import KitPvP.Tqqn.utils.Config;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
@@ -57,7 +57,7 @@ public class Commands extends BaseCommand {
         Player player = (Player) sender;
 
         //Checks if player is in the arena.
-        if (game.isArena(player)) {
+        if (Game.getInstance().playerIsArena((player))) {
             player.sendMessage(Color.translate("&cYou are in the arena."));
 
             //if not opens kit selector

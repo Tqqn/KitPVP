@@ -1,6 +1,6 @@
-package KitPvP.Tqqn.Listeners;
+package KitPvP.Tqqn.listeners;
 
-import KitPvP.Tqqn.Utils.Config;
+import KitPvP.Tqqn.utils.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

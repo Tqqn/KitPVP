@@ -1,10 +1,10 @@
 package KitPvP.Tqqn;
 
-import KitPvP.Tqqn.Commands.Commands;
-import KitPvP.Tqqn.DB.DBGetter;
-import KitPvP.Tqqn.DB.DataBase;
-import KitPvP.Tqqn.Listeners.*;
-import KitPvP.Tqqn.Utils.Config;
+import KitPvP.Tqqn.commands.Commands;
+import KitPvP.Tqqn.database.DBGetter;
+import KitPvP.Tqqn.database.DataBase;
+import KitPvP.Tqqn.listeners.*;
+import KitPvP.Tqqn.utils.Config;
 import co.aikar.commands.BukkitMessageFormatter;
 import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
@@ -15,24 +15,30 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 public final class Game extends JavaPlugin {
 
     private static PaperCommandManager manager;
 
+    private static Game instance;
+
     public Config config = new Config(this);
 
-    public ArrayList<UUID> inarena = new ArrayList<>();
+    public Set<UUID> inarena = new HashSet<>();
 
-    public DataBase database;
-    public DBGetter data;
+    private DataBase database;
+    private DBGetter data;
 
     @Override
     public void onEnable() {
         this.database = new DataBase();
         this.data = new DBGetter(this);
+
+        instance = this;
+
+        database = new DataBase();
+        data = new DBGetter(this);
 
         new Config(this);
 
@@ -94,15 +100,15 @@ public final class Game extends JavaPlugin {
     public void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new onRespawn(), (this));
-        pm.registerEvents(new onJoinEvent(this), (this));
-        pm.registerEvents(new signListener(this), (this));
-        pm.registerEvents(new GUIListener(this), (this));
-        pm.registerEvents(new onDeath(this), (this));
-        pm.registerEvents(new onLeave(this), (this));
+        pm.registerEvents(new onJoinEvent(), (this));
+        pm.registerEvents(new signListener(), (this));
+        pm.registerEvents(new GUIListener(), (this));
+        pm.registerEvents(new onDeath(), (this));
+        pm.registerEvents(new onLeave(), (this));
     }
 
     //checks if the player is in the arena-list
-    public boolean isArena(Player player) {
+    public boolean playerIsArena(Player player) {
         if (inarena.contains(player.getUniqueId())) {
             return true;
         } else {
@@ -111,7 +117,19 @@ public final class Game extends JavaPlugin {
     }
 
     //adds the player to the arena-list
-    public void addArena(Player player) {
+    public void addPlayerToArena(Player player) {
         inarena.add(player.getUniqueId());
+    }
+
+    public DataBase getDataBase() {
+        return database;
+    }
+
+    public DBGetter getData() {
+        return data;
+    }
+
+    public static Game getInstance() {
+        return instance;
     }
 }

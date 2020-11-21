@@ -27,12 +27,13 @@ arena-spawn:
 
 #How the custom join sign needs to look.
 arenasign:
-  line1: '&6-- ARENA --'
-  line2: '&7-> Click to join <-'
-  line3: '&6-----'
-  line4: ''
+  lines:
+    - '&6-- ARENA --'
+    - '&7-> Click to join <-'
+    - '&6-----'
+    - ''
 
-#Key for the custom ArenaSIGN
+  #Key for the custom ArenaSIGN
   key: 'arenasign'
 
 #Customazible kits

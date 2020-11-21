@@ -1,7 +1,7 @@
-package KitPvP.Tqqn.Utils;
+package KitPvP.Tqqn.utils;
 
 import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.Kits.Kits;
+import KitPvP.Tqqn.kits.Kits;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Config {
 
@@ -23,7 +24,7 @@ public class Config {
 
     //Gets the kit names from the config and than creates them with the get methods
 
-    public static HashMap getKits() {
+    public static HashMap<String, Kits> getKits() {
         HashMap<String, Kits> foundKits = new HashMap<>();
         for (String kit : game.getConfig().getConfigurationSection("kits.").getKeys(false)) {
             Kits foundKit = new Kits(getKitName(kit), getKitDisplay(kit), Material.getMaterial(getKitGuiMaterial(kit)));
@@ -83,12 +84,18 @@ public class Config {
 
     //gets the sign lines from the custom arena sign
 
+    public static List<String> getSignLines() {
+        return game.getConfig().getStringList("arenasign.lines");
+    }
+
     public static String getSignLine0() {
         return game.getConfig().getString("arenasign.line1");
     }
+
     public static String getSignLine1() {
         return game.getConfig().getString("arenasign.line2");
     }
+
     public static String getSignLine2() {
         return game.getConfig().getString("arenasign.line3");
     }
