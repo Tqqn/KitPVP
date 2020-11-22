@@ -93,7 +93,7 @@ public class DBGetter {
 
     //close method
 
-    public static void close(ResultSet resultSet, PreparedStatement preparedStatement) {
+    public void close(ResultSet resultSet, PreparedStatement preparedStatement) {
         if (resultSet != null) {
             try {
                 resultSet.close();
