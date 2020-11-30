@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class onJoinEvent implements Listener {
+public class OnJoinEvent implements Listener {
 
     //if Player joins the server this will run
 
