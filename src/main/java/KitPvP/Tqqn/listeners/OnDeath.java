@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class onDeath implements Listener {
+public class OnDeath implements Listener {
 
     @EventHandler
     public void onPlayerDeathByPlayer(PlayerDeathEvent event) {
