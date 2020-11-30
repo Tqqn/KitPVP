@@ -99,12 +99,12 @@ public final class Game extends JavaPlugin {
     //Registering the Events
     public void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.registerEvents(new onRespawn(), (this));
-        pm.registerEvents(new onJoinEvent(), (this));
-        pm.registerEvents(new signListener(), (this));
+        pm.registerEvents(new OnRespawn(), (this));
+        pm.registerEvents(new OnJoinEvent(), (this));
+        pm.registerEvents(new SignListener(), (this));
         pm.registerEvents(new GUIListener(), (this));
-        pm.registerEvents(new onDeath(), (this));
-        pm.registerEvents(new onLeave(), (this));
+        pm.registerEvents(new OnDeath(), (this));
+        pm.registerEvents(new OnLeave(), (this));
     }
 
     //checks if the player is in the arena-list
