@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.List;
 
-public class signListener implements Listener {
+public class SignListener implements Listener {
 
     //Getting all the signlines from the config for the Arenasign
 
