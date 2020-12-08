@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class onLeave implements Listener {
+public class OnLeave implements Listener {
 
     //if player leaves and if player is in the arena-list - remove him
     @EventHandler
