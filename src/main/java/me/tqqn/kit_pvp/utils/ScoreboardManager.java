@@ -1,4 +1,4 @@
-package KitPvP.Tqqn.utils;
+package me.tqqn.kit_pvp.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,64 +14,64 @@ public class ScoreboardManager {
     //Sets the scoreboard sync, getting the data async
 
     public static void setScoreboard(int kill, int death, Player player) {
-        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
-        Objective obj = board.getObjective("kitpvp") != null ? board.getObjective("kitpvp") : board.registerNewObjective("aaa", "dummy");
-        obj.setDisplayName(Color.translate("&c&lKIT-PVP"));
-        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+        Objective objective = scoreboard.getObjective("kitpvp") != null ? scoreboard.getObjective("kitpvp") : scoreboard.registerNewObjective("aaa", "dummy");
+        objective.setDisplayName(Color.translate("&c&lKIT-PVP"));
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         //static scores
-        Score blank = obj.getScore(" ");
-        Score blank1 = obj.getScore("  ");
+        Score blank = objective.getScore(" ");
+        Score blank1 = objective.getScore("  ");
 
-        Score stats = obj.getScore(Color.translate("&e&lStats"));
+        Score stats = objective.getScore(Color.translate("&e&lStats"));
 
 
-        Score website = obj.getScore(Color.translate("&cplayer.dusdavidgames.nl"));
+        Score website = objective.getScore(Color.translate("&cplayer.dusdavidgames.nl"));
         website.setScore(1);
         blank.setScore(2);
 
 
         //dynamic scores
 
-        Team kdr = board.registerNewTeam("kdr");
-        kdr.addEntry(ChatColor.BLUE.toString());
-        kdr.setPrefix(Color.translate("&bK/D Ratio: "));
-        kdr.setSuffix(Color.translate("&f" + getRatioSum(kill, death)));
-        obj.getScore(ChatColor.BLUE.toString()).setScore(3);
+        Team killdeathratio = scoreboard.registerNewTeam("kdr");
+        killdeathratio.addEntry(ChatColor.BLUE.toString());
+        killdeathratio.setPrefix(Color.translate("&bK/D Ratio: "));
+        killdeathratio.setSuffix(Color.translate("&f" + getRatioSum(kill, death)));
+        objective.getScore(ChatColor.BLUE.toString()).setScore(3);
 
-        Team deaths = board.registerNewTeam("deaths");
+        Team deaths = scoreboard.registerNewTeam("deaths");
         deaths.addEntry(ChatColor.BLACK.toString());
         deaths.setPrefix(Color.translate("&bDeaths: "));
         deaths.setSuffix(Color.translate("&f" + death));
-        obj.getScore(ChatColor.BLACK.toString()).setScore(4);
+        objective.getScore(ChatColor.BLACK.toString()).setScore(4);
 
-        Team kills = board.registerNewTeam("kills");
+        Team kills = scoreboard.registerNewTeam("kills");
         kills.addEntry(ChatColor.AQUA.toString());
         kills.setPrefix(Color.translate("&bKills: "));
         kills.setSuffix(Color.translate("&f" + kill));
-        obj.getScore(ChatColor.AQUA.toString()).setScore(5);
+        objective.getScore(ChatColor.AQUA.toString()).setScore(5);
 
         blank1.setScore(6);
         stats.setScore(7);
 
-        player.setScoreboard(obj.getScoreboard());
+        player.setScoreboard(objective.getScoreboard());
     }
 
     // Updating scoreboard sync, getting the data async
 
     public static void updateScoreboard(int killamount, int deathamount, Player player) {
         Team kills = player.getScoreboard().getTeam("kills");
-        Team kill = kills != null ? kills : player.getScoreboard().registerNewTeam("kills");
-        kill.setSuffix(ChatColor.WHITE + Integer.toString(killamount));
+        Team newkills = kills != null ? kills : player.getScoreboard().registerNewTeam("kills");
+        newkills.setSuffix(ChatColor.WHITE + Integer.toString(killamount));
 
         Team deaths = player.getScoreboard().getTeam("deaths");
-        Team death = deaths != null ? deaths : player.getScoreboard().registerNewTeam("deaths");
-        death.setSuffix(ChatColor.WHITE + Integer.toString(deathamount));
+        Team newdeaths = deaths != null ? deaths : player.getScoreboard().registerNewTeam("deaths");
+        newdeaths.setSuffix(ChatColor.WHITE + Integer.toString(deathamount));
 
-        Team ratio = player.getScoreboard().getTeam("kdr");
-        Team rati = ratio != null ? ratio : player.getScoreboard().registerNewTeam("kdr");
-        rati.setSuffix(ChatColor.WHITE + getRatioSum(killamount, deathamount));
+        Team killdeathratio = player.getScoreboard().getTeam("kdr");
+        Team newkilldeathratio = killdeathratio != null ? killdeathratio : player.getScoreboard().registerNewTeam("kdr");
+        newkilldeathratio.setSuffix(ChatColor.WHITE + getRatioSum(killamount, deathamount));
 
     }
 

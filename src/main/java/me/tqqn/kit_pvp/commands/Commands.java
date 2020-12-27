@@ -1,9 +1,9 @@
-package KitPvP.Tqqn.commands;
+package me.tqqn.kit_pvp.commands;
 
-import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.kits.KitsGUI;
-import KitPvP.Tqqn.utils.Color;
-import KitPvP.Tqqn.utils.Config;
+import me.tqqn.kit_pvp.Game;
+import me.tqqn.kit_pvp.kits.KitsGUI;
+import me.tqqn.kit_pvp.utils.Color;
+import me.tqqn.kit_pvp.utils.Config;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;

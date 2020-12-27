@@ -1,6 +1,6 @@
-package KitPvP.Tqqn.kits;
+package me.tqqn.kit_pvp.kits;
 
-import KitPvP.Tqqn.utils.Color;
+import me.tqqn.kit_pvp.utils.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,10 +23,10 @@ public class Kits {
 
     //gets the itemstack as stated in the config
     public ItemStack getItemStack() {
-        ItemStack is = new ItemStack(material);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(Color.translate(display));
-        is.setItemMeta(im);
-        return is;
+        ItemStack itemStack = new ItemStack(material);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(Color.translate(display));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
     }
 }

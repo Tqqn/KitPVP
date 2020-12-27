@@ -1,8 +1,7 @@
-package KitPvP.Tqqn.listeners;
+package me.tqqn.kit_pvp.listeners;
 
-import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.database.DBGetter;
-import KitPvP.Tqqn.utils.Config;
+import me.tqqn.kit_pvp.Game;
+import me.tqqn.kit_pvp.utils.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +17,7 @@ public class OnJoin implements Listener {
 
         //sets the scoreboard sync for the joining player, getting the data async
 
-        DBGetter.getInstance().getPlayerDataForJoinScoreboard(player);
+        Game.getInstance().getDBGetter().getPlayerDataForJoinScoreboard(player);
 
         //teleports the player to the lobby spawn on join.
         player.teleport(Config.getLobbySpawn());
@@ -29,6 +28,6 @@ public class OnJoin implements Listener {
 
        //creates a new Player in the Database on join.
 
-       Game.getInstance().getData().createPlayer(player);
+       Game.getInstance().getDBGetter().createPlayer(player);
    }
 }

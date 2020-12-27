@@ -1,8 +1,7 @@
-package KitPvP.Tqqn.listeners;
+package me.tqqn.kit_pvp.listeners;
 
-import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.database.DBGetter;
-import KitPvP.Tqqn.utils.Color;
+import me.tqqn.kit_pvp.Game;
+import me.tqqn.kit_pvp.utils.Color;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,12 +19,12 @@ public class OnDeath implements Listener {
 
             //updates the stats (DB) for the player and killer
 
-            DBGetter.getInstance().getStatsData(player);
-            DBGetter.getInstance().getStatsData(killer);
+            Game.getInstance().getDBGetter().getStatsData(player);
+            Game.getInstance().getDBGetter().getStatsData(killer);
 
             //adding death/kill (DB) for the player and killer
-            DBGetter.getInstance().addDeath(player.getUniqueId());
-            DBGetter.getInstance().addKill(killer.getUniqueId());
+            Game.getInstance().getDBGetter().addDeath(player.getUniqueId());
+            Game.getInstance().getDBGetter().addKill(killer.getUniqueId());
 
             //remove player when he died from the playerinarena list
 

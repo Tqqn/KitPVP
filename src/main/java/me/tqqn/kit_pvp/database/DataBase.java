@@ -1,6 +1,6 @@
-package KitPvP.Tqqn.database;
+package me.tqqn.kit_pvp.database;
 
-import KitPvP.Tqqn.utils.Config;
+import me.tqqn.kit_pvp.utils.Config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

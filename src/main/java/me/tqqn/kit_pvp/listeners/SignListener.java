@@ -1,9 +1,9 @@
-package KitPvP.Tqqn.listeners;
+package me.tqqn.kit_pvp.listeners;
 
-import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.kits.KitsGUI;
-import KitPvP.Tqqn.utils.Color;
-import KitPvP.Tqqn.utils.Config;
+import me.tqqn.kit_pvp.Game;
+import me.tqqn.kit_pvp.kits.KitsGUI;
+import me.tqqn.kit_pvp.utils.Color;
+import me.tqqn.kit_pvp.utils.Config;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -18,13 +18,12 @@ public class SignListener implements Listener {
 
     //Getting all the signlines from the config for the Arenasign
 
+    private List<String> lines = Config.getSignLines();
 
-    public List<String> lines = Config.getSignLines();
-
-    public String sign0 = Color.translate(lines.get(0));
-    public String sign1 = Color.translate(lines.get(1));
-    public String sign2 = Color.translate(lines.get(2));
-    public String sign3 = Color.translate(lines.get(3));
+    private String sign0 = Color.translate(lines.get(0));
+    private String sign1 = Color.translate(lines.get(1));
+    private String sign2 = Color.translate(lines.get(2));
+    private String sign3 = Color.translate(lines.get(3));
 
     //if a player clicks a sign that equals the first line of the arenasign, open the KITGUI to choose a kit.
     @EventHandler
@@ -53,9 +52,9 @@ public class SignListener implements Listener {
     public void arenaSignPlace(SignChangeEvent event) {
         Player player = event.getPlayer();
 
-        String msg = event.getLine(0);
+        String message = event.getLine(0);
         if (player.hasPermission("kitpvp.signplace")) {
-            if (msg != null && msg.equalsIgnoreCase(Config.getSignKey())) {
+            if (message != null && message.equalsIgnoreCase(Config.getSignKey())) {
                 event.setLine(0, sign0);
                 event.setLine(1, sign1);
                 event.setLine(2, sign2);

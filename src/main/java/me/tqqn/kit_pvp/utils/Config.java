@@ -1,7 +1,7 @@
-package KitPvP.Tqqn.utils;
+package me.tqqn.kit_pvp.utils;
 
-import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.kits.Kits;
+import me.tqqn.kit_pvp.Game;
+import me.tqqn.kit_pvp.kits.Kits;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Config {
 
@@ -25,13 +26,13 @@ public class Config {
     //Gets the kit names from the config and than creates them with the get methods
 
     public static HashMap<String, Kits> getKits() {
-        HashMap<String, Kits> foundKits = new HashMap<>();
+        Map<String, Kits> foundKits = new HashMap<>();
         for (String kit : game.getConfig().getConfigurationSection("kits.").getKeys(false)) {
             Kits foundKit = new Kits(getKitName(kit), getKitDisplay(kit), Material.getMaterial(getKitGuiMaterial(kit)));
             String name = foundKit.getName();
             foundKits.put(name, foundKit);
         }
-        return foundKits;
+        return (HashMap) foundKits;
     }
 
     //gets the spawnpoint of the lobby from the config.
@@ -111,10 +112,10 @@ public class Config {
     public static void giveKit(Player player,String key) {
         for (String items : game.getConfig().getStringList("kits." + key + ".items")) {
             String[] split = items.split(";");
-            Material mat = Material.getMaterial(split[0]);
+            Material material = Material.getMaterial(split[0]);
             int amount = Integer.parseInt(split[1]);
 
-            ItemStack kit = new ItemStack(mat,amount);
+            ItemStack kit = new ItemStack(material,amount);
 
             player.getInventory().addItem(kit);
             player.closeInventory();
@@ -152,6 +153,4 @@ public class Config {
     public static String getPassword() {
         return game.getConfig().getString("database.password");
     }
-
-
 }

@@ -1,6 +1,6 @@
 name: KitPVP
 version: ${project.version}
-main: KitPvP.Tqqn.Game
+main: me.tqqn.kit_pvp.Game
 api-version: 1.13
 authors: [ Tqqn ]
 description: KitPVP

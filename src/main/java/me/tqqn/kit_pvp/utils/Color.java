@@ -1,4 +1,4 @@
-package KitPvP.Tqqn.utils;
+package me.tqqn.kit_pvp.utils;
 
 import org.bukkit.ChatColor;
 
