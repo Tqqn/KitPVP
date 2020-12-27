@@ -1,7 +1,7 @@
-package KitPvP.Tqqn.database;
+package me.tqqn.kit_pvp.database;
 
-import KitPvP.Tqqn.Game;
-import KitPvP.Tqqn.utils.ScoreboardManager;
+import me.tqqn.kit_pvp.Game;
+import me.tqqn.kit_pvp.utils.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -12,13 +12,6 @@ import java.util.UUID;
 
 public class DBGetter {
 
-    private static DBGetter instance;
-
-    public DBGetter(Game game) {
-        instance = this;
-    }
-
-
     //Creating a table if not exists with the UUID, KILLS and DEATHS
 
     public void createTable() {
@@ -27,8 +20,9 @@ public class DBGetter {
             preparedStatement = Game.getInstance().getDataBase().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS player_info "
                     + "(UUID VARCHAR(100),KILLS INT(100),DEATHS INT(100),PRIMARY KEY (UUID))");
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -44,8 +38,8 @@ public class DBGetter {
                 preparedStatement.executeUpdate();
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -60,8 +54,8 @@ public class DBGetter {
                 return true;
             }
             return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
         return false;
     }
@@ -73,8 +67,8 @@ public class DBGetter {
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -86,8 +80,8 @@ public class DBGetter {
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -97,15 +91,15 @@ public class DBGetter {
         if (resultSet != null) {
             try {
                 resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
             }
         }
         if (preparedStatement != null) {
             try {
                 preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
             }
         }
     }
@@ -126,8 +120,8 @@ public class DBGetter {
                         Bukkit.getScheduler().runTask(Game.getInstance(), () -> ScoreboardManager.updateScoreboard(kills, deaths, player));
                     }
                     close(resultSet, preparedStatement);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
                 }
 
 
@@ -151,15 +145,10 @@ public class DBGetter {
                         Bukkit.getScheduler().runTaskLater(Game.getInstance(), () -> ScoreboardManager.setScoreboard(kills, deaths, player), 20L);
                     }
                     close(resultSet, preparedStatement);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
                 }
             }
         });
     }
-
-    public static DBGetter getInstance() {
-        return instance;
-    }
-
 }
