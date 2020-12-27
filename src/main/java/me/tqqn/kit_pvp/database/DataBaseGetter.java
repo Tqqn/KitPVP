@@ -39,6 +39,7 @@ public class DataBaseGetter {
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
 
+                //sets the users kills/deaths on 0, not NULL.
                 PreparedStatement setDeathsKillsTo0 = Game.getInstance().getDataBase().getConnection().prepareStatement("UPDATE player_info SET KILLS=0, DEATHS=0 WHERE UUID=?");
                 setDeathsKillsTo0.setString(1, uuid.toString());
                 setDeathsKillsTo0.executeUpdate();
