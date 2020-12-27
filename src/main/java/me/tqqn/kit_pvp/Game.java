@@ -103,7 +103,7 @@ public final class Game extends JavaPlugin {
         pm.registerEvents(new OnRespawn(), (this));
         pm.registerEvents(new OnJoin(), (this));
         pm.registerEvents(new SignListener(), (this));
-        pm.registerEvents(new GUIListener(), (this));
+        pm.registerEvents(new GuiListener(), (this));
         pm.registerEvents(new OnDeath(), (this));
         pm.registerEvents(new OnLeave(), (this));
     }

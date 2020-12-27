@@ -1,7 +1,7 @@
 package me.tqqn.kit_pvp.listeners;
 
 import me.tqqn.kit_pvp.Game;
-import me.tqqn.kit_pvp.kits.KitsGUI;
+import me.tqqn.kit_pvp.kits.KitsGui;
 import me.tqqn.kit_pvp.utils.Color;
 import me.tqqn.kit_pvp.utils.Config;
 import org.bukkit.Material;
@@ -36,7 +36,7 @@ public class SignListener implements Listener {
 
                     //if the player IS NOT in the arena list -> open GUI, else dont open and send msg
                     if (!Game.getInstance().playerIsArena((player))) {
-                        KitsGUI gui = new KitsGUI();
+                        KitsGui gui = new KitsGui();
                         player.openInventory(gui.getInv());
                     } else {
                         player.sendMessage(Color.translate("&cYou are in the arena."));

@@ -7,13 +7,13 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Map;
 
-public class KitsGUI {
+public class KitsGui {
 
     private Inventory inventory;
 
     //creates the inventory and adds all the kit gui-display/material to the inventory.
 
-  public KitsGUI() {
+  public KitsGui() {
       inventory = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Kit Selection");
       Map<String, Kits> kitslist = Config.getKits();
       for (Kits kits : kitslist.values()) {

@@ -1,7 +1,7 @@
 package me.tqqn.kit_pvp.commands;
 
 import me.tqqn.kit_pvp.Game;
-import me.tqqn.kit_pvp.kits.KitsGUI;
+import me.tqqn.kit_pvp.kits.KitsGui;
 import me.tqqn.kit_pvp.utils.Color;
 import me.tqqn.kit_pvp.utils.Config;
 import co.aikar.commands.BaseCommand;
@@ -62,7 +62,7 @@ public class Commands extends BaseCommand {
 
             //if not opens kit selector
         } else {
-            KitsGUI gui = new KitsGUI();
+            KitsGui gui = new KitsGui();
             player.openInventory(gui.getInv());
         }
     }
