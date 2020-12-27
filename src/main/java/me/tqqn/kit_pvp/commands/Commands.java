@@ -17,10 +17,7 @@ import org.bukkit.entity.Player;
 
 public class Commands extends BaseCommand {
 
-    public Game game;
-
-    public Commands(Game game) {
-        this.game = game;
+    public Commands() {
     }
 
     //kp help -> shows the existing commands

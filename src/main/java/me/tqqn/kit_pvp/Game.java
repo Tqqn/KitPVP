@@ -34,8 +34,8 @@ public final class Game extends JavaPlugin {
     public void onEnable() {
 
 
-        //Creates a Config
-        new Config(this);
+        //Creates a Config if not exists
+        saveDefaultConfig();
 
         this.database = new DataBase();
         this.dataBaseGetter = new DataBaseGetter();
@@ -91,7 +91,7 @@ public final class Game extends JavaPlugin {
         manager.setFormat(MessageType.INFO, new BukkitMessageFormatter(ChatColor.DARK_GREEN, ChatColor.GREEN, ChatColor.WHITE));
         manager.setFormat(MessageType.HELP, new BukkitMessageFormatter(ChatColor.DARK_GREEN, ChatColor.GREEN, ChatColor.WHITE));
 
-        manager.registerCommand(new Commands(this));
+        manager.registerCommand(new Commands());
 
         manager.setDefaultExceptionHandler((command, registeredCommand, sender, args, t) -> {
             getLogger().warning("Error occurred with command " + command.getName());

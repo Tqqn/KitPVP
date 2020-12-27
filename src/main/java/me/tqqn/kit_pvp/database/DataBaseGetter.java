@@ -20,6 +20,7 @@ public class DataBaseGetter {
             preparedStatement = Game.getInstance().getDataBase().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS player_info "
                     + "(UUID VARCHAR(100),KILLS INT(100),DEATHS INT(100),PRIMARY KEY (UUID))");
             preparedStatement.executeUpdate();
+            preparedStatement.close();
 
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -36,6 +37,12 @@ public class DataBaseGetter {
                         " (UUID) VALUES (?)");
                 preparedStatement.setString(1, uuid.toString());
                 preparedStatement.executeUpdate();
+                preparedStatement.close();
+
+                PreparedStatement setDeathsKillsTo0 = Game.getInstance().getDataBase().getConnection().prepareStatement("UPDATE player_info SET KILLS=0, DEATHS=0 WHERE UUID=?");
+                setDeathsKillsTo0.setString(1, uuid.toString());
+                setDeathsKillsTo0.executeUpdate();
+                setDeathsKillsTo0.close();
             }
 
         } catch (SQLException exception) {
@@ -53,6 +60,7 @@ public class DataBaseGetter {
                 // player is found
                 return true;
             }
+            close(results,preparedStatement);
             return false;
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -76,7 +84,6 @@ public class DataBaseGetter {
     public void addDeath(UUID uuid) {
         try {
             PreparedStatement preparedStatement = Game.getInstance().getDataBase().getConnection().prepareStatement("UPDATE player_info SET DEATHS=DEATHS+1 WHERE UUID=?");
-            //  preparedStatement.setInt(1,(getKills(uuid) + deaths));
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -85,7 +92,7 @@ public class DataBaseGetter {
         }
     }
 
-    //close method
+    //closes the resultset/preparedstatement
 
     public void close(ResultSet resultSet, PreparedStatement preparedStatement) {
         if (resultSet != null) {
@@ -119,7 +126,9 @@ public class DataBaseGetter {
                         final int deaths = resultSet.getInt("DEATHS");
                         Bukkit.getScheduler().runTask(Game.getInstance(), () -> ScoreboardManager.updateScoreboard(kills, deaths, player));
                     }
+                    //closes the resultset/preparedstatement
                     close(resultSet, preparedStatement);
+
                 } catch (SQLException exception) {
                     exception.printStackTrace();
                 }
@@ -144,6 +153,7 @@ public class DataBaseGetter {
                         final int deaths = resultSet.getInt("DEATHS");
                         Bukkit.getScheduler().runTaskLater(Game.getInstance(), () -> ScoreboardManager.setScoreboard(kills, deaths, player), 20L);
                     }
+                    //closes the resultset/preparedstatement
                     close(resultSet, preparedStatement);
                 } catch (SQLException exception) {
                     exception.printStackTrace();

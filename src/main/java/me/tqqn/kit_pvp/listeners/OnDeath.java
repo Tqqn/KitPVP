@@ -17,17 +17,15 @@ public class OnDeath implements Listener {
         if (player.getKiller() instanceof Player) {
             Player killer = player.getKiller();
 
-            //updates the stats (DB) for the player and killer
-
-            Game.getInstance().getDataBaseGetter().getStatsData(player);
-            Game.getInstance().getDataBaseGetter().getStatsData(killer);
-
             //adding death/kill (DB) for the player and killer
             Game.getInstance().getDataBaseGetter().addDeath(player.getUniqueId());
             Game.getInstance().getDataBaseGetter().addKill(killer.getUniqueId());
 
-            //remove player when he died from the playerinarena list
+            //updates the stats (DB) for the player and killer
+            Game.getInstance().getDataBaseGetter().getStatsData(player);
+            Game.getInstance().getDataBaseGetter().getStatsData(killer);
 
+            //remove player when he died from the playerinarena list
             if (Game.getInstance().getPlayerInArenaMap().contains(player.getUniqueId())) {
                 Game.getInstance().getPlayerInArenaMap().remove(player.getUniqueId());
             }
