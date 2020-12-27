@@ -12,7 +12,7 @@ public class DataBase {
 
     private String host = Config.getHost();
     private String port = Config.getPort();
-    private String database = Config.getDBname();
+    private String database = Config.getDataBaseName();
     private String username = Config.getUsername();
     private String password = Config.getPassword();
 
@@ -35,8 +35,8 @@ public class DataBase {
         if (isConnected()) {
             try {
                 connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
             }
         }
     }

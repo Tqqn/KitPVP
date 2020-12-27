@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class KitsGUI {
 
@@ -15,7 +15,7 @@ public class KitsGUI {
 
   public KitsGUI() {
       inventory = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Kit Selection");
-      HashMap<String, Kits> kitslist = Config.getKits();
+      Map<String, Kits> kitslist = Config.getKits();
       for (Kits kits : kitslist.values()) {
           inventory.addItem(kits.getItemStack());
       }

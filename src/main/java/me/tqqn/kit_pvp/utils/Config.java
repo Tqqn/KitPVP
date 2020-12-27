@@ -144,9 +144,11 @@ public class Config {
     public static String getPort() {
         return game.getConfig().getString("database.port");
     }
-    public static String getDBname() {
+
+    public static String getDataBaseName() {
         return game.getConfig().getString("database.DBname");
     }
+
     public static String getUsername() {
         return game.getConfig().getString("database.username");
     }

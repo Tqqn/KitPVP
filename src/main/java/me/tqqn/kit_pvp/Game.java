@@ -4,8 +4,8 @@ import co.aikar.commands.BukkitMessageFormatter;
 import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
 import me.tqqn.kit_pvp.commands.Commands;
-import me.tqqn.kit_pvp.database.DBGetter;
 import me.tqqn.kit_pvp.database.DataBase;
+import me.tqqn.kit_pvp.database.DataBaseGetter;
 import me.tqqn.kit_pvp.listeners.*;
 import me.tqqn.kit_pvp.utils.Config;
 import org.bukkit.Bukkit;
@@ -14,10 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 public final class Game extends JavaPlugin {
@@ -26,38 +25,22 @@ public final class Game extends JavaPlugin {
 
     private static Game instance;
 
-    public Set<UUID> playerInArena = new HashSet<>();
+    public Collection<UUID> playerInArena = new HashSet<>();
 
     private DataBase database;
-    private DBGetter dbGetter;
+    private DataBaseGetter dataBaseGetter;
 
     @Override
     public void onEnable() {
+
+        new Config(this);
+
         this.database = new DataBase();
-        this.dbGetter = new DBGetter();
+        this.dataBaseGetter = new DataBaseGetter();
 
         instance = this;
 
-        //try to connect the DataBase
-        try {
-            database.connect();
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Database not connected (login info incorrect or this server is not using a database).");
-
-            getServer().getPluginManager().disablePlugin(this);
-            System.out.println("Plugin disabled. Database not connected.");
-        }
-
-        //if the DataBase is connected throws println to console
-        if (database.isConnected()) {
-            System.out.println("Database is connected!");
-            dbGetter.createTable();
-        }
-
         System.out.println("KitPVP Plugin has been enabled!");
-
-        //Makes config if it doesn't exist.
-        doesConfigExist();
 
         //Register Commands
         registerCommands();
@@ -65,6 +48,22 @@ public final class Game extends JavaPlugin {
         //Register Events
         registerEvents();
 
+        //try to connect the DataBase
+        try {
+            database.connect();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Database not connected (login info incorrect or this server is not using a database).");
+
+            //if database cannot connect, shutdown plugin.
+            getServer().getPluginManager().disablePlugin(this);
+            System.out.println("Plugin disabled. Database not connected.");
+        }
+
+        //if the DataBase is connected throws println to console
+        if (database.isConnected()) {
+            System.out.println("Database is connected!");
+            dataBaseGetter.createTable();
+        }
     }
 
     @Override
@@ -77,12 +76,6 @@ public final class Game extends JavaPlugin {
         //teleports all players to lobbyspawn on disable/reload
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.teleport(Config.getLobbySpawn());
-        }
-    }
-
-    public void doesConfigExist() {
-        if (!new File(this.getDataFolder(), "config.yml").exists()) {
-            new Config(this);
         }
     }
 
@@ -136,8 +129,8 @@ public final class Game extends JavaPlugin {
     }
 
     //instance for the DBGetter
-    public DBGetter getDBGetter() {
-        return dbGetter;
+    public DataBaseGetter getDataBaseGetter() {
+        return dataBaseGetter;
     }
 
     //instance for the main class (Game)

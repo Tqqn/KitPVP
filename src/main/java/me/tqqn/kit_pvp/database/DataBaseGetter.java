@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class DBGetter {
+public class DataBaseGetter {
 
     //Creating a table if not exists with the UUID, KILLS and DEATHS
 

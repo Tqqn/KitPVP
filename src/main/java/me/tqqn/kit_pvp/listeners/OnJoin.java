@@ -17,7 +17,7 @@ public class OnJoin implements Listener {
 
         //sets the scoreboard sync for the joining player, getting the data async
 
-        Game.getInstance().getDBGetter().getPlayerDataForJoinScoreboard(player);
+        Game.getInstance().getDataBaseGetter().getPlayerDataForJoinScoreboard(player);
 
         //teleports the player to the lobby spawn on join.
         player.teleport(Config.getLobbySpawn());
@@ -28,6 +28,6 @@ public class OnJoin implements Listener {
 
        //creates a new Player in the Database on join.
 
-       Game.getInstance().getDBGetter().createPlayer(player);
+       Game.getInstance().getDataBaseGetter().createPlayer(player);
    }
 }

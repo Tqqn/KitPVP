@@ -18,12 +18,12 @@ public class SignListener implements Listener {
 
     //Getting all the signlines from the config for the Arenasign
 
-    private List<String> lines = Config.getSignLines();
+    private final List<String> lines = Config.getSignLines();
 
-    private String sign0 = Color.translate(lines.get(0));
-    private String sign1 = Color.translate(lines.get(1));
-    private String sign2 = Color.translate(lines.get(2));
-    private String sign3 = Color.translate(lines.get(3));
+    private final String sign0 = Color.translate(lines.get(0));
+    private final String sign1 = Color.translate(lines.get(1));
+    private final String sign2 = Color.translate(lines.get(2));
+    private final String sign3 = Color.translate(lines.get(3));
 
     //if a player clicks a sign that equals the first line of the arenasign, open the KITGUI to choose a kit.
     @EventHandler
