@@ -25,7 +25,7 @@ public final class Game extends JavaPlugin {
 
     private static Game instance;
 
-    public Collection<UUID> playerInArena = new HashSet<>();
+    private Collection<UUID> playerInArena = new HashSet<>();
 
     private DataBase database;
     private DataBaseGetter dataBaseGetter;
@@ -33,6 +33,8 @@ public final class Game extends JavaPlugin {
     @Override
     public void onEnable() {
 
+
+        //Creates a Config
         new Config(this);
 
         this.database = new DataBase();
@@ -136,5 +138,9 @@ public final class Game extends JavaPlugin {
     //instance for the main class (Game)
     public static Game getInstance() {
         return instance;
+    }
+    //returns the Collection playerInArena
+    public Collection getPlayerInArenaMap() {
+        return this.playerInArena;
     }
 }

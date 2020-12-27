@@ -28,8 +28,8 @@ public class OnDeath implements Listener {
 
             //remove player when he died from the playerinarena list
 
-            if (Game.getInstance().playerInArena.contains(player.getUniqueId())) {
-                Game.getInstance().playerInArena.remove(player.getUniqueId());
+            if (Game.getInstance().getPlayerInArenaMap().contains(player.getUniqueId())) {
+                Game.getInstance().getPlayerInArenaMap().remove(player.getUniqueId());
             }
 
             //sets a custom deathmessage
@@ -47,8 +47,8 @@ public class OnDeath implements Listener {
             Player player = (Player) event.getEntity();
 
             //if the player that died is in the arena, remove him from arenalist
-            if (Game.getInstance().playerInArena.contains(player.getUniqueId())) {
-                Game.getInstance().playerInArena.remove(player.getUniqueId());
+            if (Game.getInstance().getPlayerInArenaMap().contains(player.getUniqueId())) {
+                Game.getInstance().getPlayerInArenaMap().remove(player.getUniqueId());
             }
 
             //if player dies the stuff he drops will despawn/get removed.
